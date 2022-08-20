@@ -22,7 +22,7 @@ namespace DatabaseCRUD.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                IConfigurationRoot Configuration=new ConfigurationBuilder()
+                IConfigurationRoot Configuration = new ConfigurationBuilder()
                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                     .AddJsonFile("appsettings.json")
                     .Build();
@@ -36,9 +36,7 @@ namespace DatabaseCRUD.Models
             {
                 entity.HasKey(e => e.ProductId);
 
-                entity.Property(e => e.ProductId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ProductID");
+                entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
                 entity.Property(e => e.LaunchDate).HasColumnType("datetime");
 
