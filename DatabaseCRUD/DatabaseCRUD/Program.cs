@@ -2,7 +2,7 @@ using DatabaseCRUD.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var MyDatabasestring = builder.Configuration.GetConnectionString("MyDataBasr");
+var MyDatabasestring = builder.Configuration.GetConnectionString("MyDataBase");
 builder.Services.AddDbContext<NorthWindContext>(opt =>
 {
     opt.UseSqlServer(MyDatabasestring);

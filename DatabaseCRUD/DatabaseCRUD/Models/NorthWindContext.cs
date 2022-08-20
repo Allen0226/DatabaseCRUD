@@ -26,7 +26,7 @@ namespace DatabaseCRUD.Models
                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                     .AddJsonFile("appsettings.json")
                     .Build();
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("MyDataBasr"));
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("MyDataBase"));
             }
         }
 
@@ -34,11 +34,13 @@ namespace DatabaseCRUD.Models
         {
             modelBuilder.Entity<MyProduct>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.ProductId);
+
+                entity.Property(e => e.ProductId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ProductID");
 
                 entity.Property(e => e.LaunchDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
                 entity.Property(e => e.ProductName).HasMaxLength(50);
 
