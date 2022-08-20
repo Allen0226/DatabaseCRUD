@@ -50,12 +50,10 @@
                             </div>
                         </td>
                         <td>
-                            <a 
-                               class="btn btn-warning" type="submit">修改</a>
+                            <a class="btn btn-warning" v-on:click="EditProduct(item)" >修改</a>
                         </td>
                         <td>
-                            <button  class="btn btn-danger"
-                                    type="submit">
+                            <button  class="btn btn-danger"type="submit" v-on:click="DeleteProduct(item)">
                                 下架
                             </button>
                         </td>
@@ -71,12 +69,41 @@
             data: {
                 productlist: [],
             },
-            mounted: function() {
-                fetch("/api/Product/GetProductInfo")
+            methods: {
+                GetProductInfo: function() {
+                    fetch("/api/Product/GetProductInfo")
                     .then(response => response.json())
                     .then(result => {
                         vm.productlist = result
                     });
+                },
+                EditProduct: function(item) {
+                    $.ajax({
+                        type:"GET",
+                        url:`/api/Product/EditProductInfo/${item.productId}`,
+                    }).done(res => {
+                        if (res) {
+                            window.location.href = "/home/EditProduct";
+                        } else {
+                            alert("無法編輯");
+                        }
+                    })
+                },
+                DeleteProduct: function(item) {
+                    $.ajax({
+                        type:"DELETE",
+                        url:`/api/Product/DeleteProductInfo/${item.productId}`,
+                    }).done(res => {
+                        if (res) {
+                            vm.GetProductInfo();
+                        } else {
+                            alert("無法下架商品");
+                        }
+                    })
+                }
+            },
+            mounted: function() {
+                this.GetProductInfo();
             }
         }).$mount("#ProductManage")
     </script>
